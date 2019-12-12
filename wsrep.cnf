@@ -1,0 +1,20 @@
+[mysqld]
+
+wsrep_on = ON
+
+# Path to Galera library
+wsrep_provider=/usr/lib64/galera/libgalera_smm.so
+
+wsrep_cluster_name=mariadb-cluster
+wsrep_cluster_address=gcomm://172.16.#{SUBNET}.61,172.16.#{SUBNET}.62,172.16.#{SUBNET}.63
+
+wsrep_node_name=mariadb-cluster-#{i}
+wsrep_node_address=172.16.#{SUBNET}.6#{i}
+
+wsrep_sst_method=mariabackup
+wsrep_sst_auth=sstuser:passw0rd
+
+binlog_format=ROW
+default_storage_engine=InnoDB
+innodb_autoinc_lock_mode=2
+query_cache_size=0

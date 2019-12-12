@@ -1,0 +1,63 @@
+# Globals
+[maxscale]
+threads=1
+
+# Servers
+[galera01]
+type=server
+address=172.16.#{SUBNET}.61
+port=3306
+protocol=MySQLBackend
+priority=1
+
+[galera02]
+type=server
+address=172.16.#{SUBNET}.62
+port=3306
+protocol=MySQLBackend
+priority=2
+
+[galera03]
+type=server
+address=172.16.#{SUBNET}.63
+port=3306
+protocol=MySQLBackend
+priority=3
+
+# Monitoring for the servers
+[Galera-Monitor]
+type=monitor
+module=galeramon
+servers=galera01,galera02,galera03
+user=maxscale
+passwd=M4xsc4l3p4ss!!
+monitor_interval=1000
+use_priority=true
+disable_master_role_setting=false
+
+# Galera router service
+[Galera-Service]
+type=service
+router=readwritesplit
+servers=galera01,galera02,galera03
+user=maxscale
+passwd=M4xsc4l3p4ss!!
+
+# MaxAdmin Service
+[MaxAdmin-Service]
+type=service
+router=cli
+
+# Galera cluster listener
+[Galera-Listener]
+type=listener
+service=Galera-Service
+protocol=MySQLClient
+port=3306
+
+# MaxAdmin listener
+[MaxAdmin-Listener]
+type=listener
+service=MaxAdmin-Service
+protocol=maxscaled
+socket=default
