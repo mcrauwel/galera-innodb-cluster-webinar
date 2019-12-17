@@ -173,6 +173,8 @@ password = #{ROOT_PASSWORD}
         sed -i s/^SELINUX=.*$/SELINUX=permissive/ /etc/selinux/config
         setenforce permissive
 
+        echo "skip-name-resolve" >> /etc/my.cnf
+        echo "binlog-checksum = NONE" >> /etc/my.cnf
         echo "server-id = 1#{i}" >> /etc/my.cnf
 
         systemctl enable mysqld
