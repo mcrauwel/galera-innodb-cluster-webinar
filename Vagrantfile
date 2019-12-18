@@ -200,7 +200,7 @@ password = #{ROOT_PASSWORD}
         mysql --execute="CREATE USER IF NOT EXISTS root@172.16.#{SUBNET}.51 IDENTIFIED WITH mysql_native_password BY '#{ROOT_PASSWORD}'"
         mysql --execute="GRANT ALL PRIVILEGES ON *.* TO 'root'@'172.16.#{SUBNET}.51' WITH GRANT OPTION"
 
-        mysql --execute="CREATE USER IF NOT EXISTS sbtest@'172.16.#{SUBNET}.0/255.255.255.0' IDENTIFIED BY '#{APP_PASSWORD}';"
+        mysql --execute="CREATE USER IF NOT EXISTS sbtest@'172.16.#{SUBNET}.0/255.255.255.0' IDENTIFIED WITH mysql_native_password BY '#{APP_PASSWORD}';"
         mysql --execute="GRANT ALL ON sbtest.* TO sbtest@'172.16.#{SUBNET}.0/255.255.255.0';"
 
         mkdir -p /root/.ssh
